@@ -9,8 +9,6 @@ public class Player {
 
 	public Player(Board board){
 		game = board;
-		winner = false;
-		loser = false;
 		score = 0;
 		indicator = ".";
 	}
@@ -20,11 +18,12 @@ public class Player {
 	}
 	
 	public void setWinner(){
-		winner = true;
+		System.out.println("!!!!!!!! YOU'RE A WINNER!!!!!!!!!!!!!!");
 	}
 	
 	public void setLoser(){
-		loser = true;
+		System.out.println(" DEFEAT ");
+
 	}
 	
 	public void updateScore(int x){

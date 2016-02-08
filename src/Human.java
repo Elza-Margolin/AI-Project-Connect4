@@ -18,7 +18,10 @@ public class Human extends Player {
 	while(( input=br.readLine())!=null){
 		int s = game.insert(Integer.valueOf(input), this);
 		if(s == -1){System.out.println("Illegal move: enter another number");}
-		else return game;
+		else{
+			updateScore(s);
+			return game;
+		}
 		}
 	
 	return game;

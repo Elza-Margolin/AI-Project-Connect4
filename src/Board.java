@@ -111,7 +111,7 @@ public class Board {
 						if(game[i-1][adji+1].equals(indicator))
 							score+=1;
 					}
-					x.updateScore(score);
+//					x.updateScore(score);
 					return score;
 				}
 			}
@@ -182,8 +182,7 @@ public class Board {
 		}
 		return temp;
 	}
-	
-	
+
 	
 	
 	public static void main(String[] args) throws IOException{
