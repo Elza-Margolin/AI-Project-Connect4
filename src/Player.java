@@ -6,6 +6,7 @@ public class Player {
 	boolean loser;
 	int score;
 	String indicator;
+	Player oppenent;
 
 	public Player(Board board){
 		game = board;
@@ -24,6 +25,14 @@ public class Player {
 	public void setLoser(){
 		System.out.println(" DEFEAT ");
 
+	}
+	
+	public void setOpponent(Player x){
+		oppenent = x;
+	}
+	
+	public void setIndicator(String x){
+		indicator = x;
 	}
 	
 	public void updateScore(int x){

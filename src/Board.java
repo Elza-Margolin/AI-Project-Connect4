@@ -8,6 +8,7 @@ public class Board {
 	String[][] game;
 	int freeSpace;
 	int boardSize;
+	int costOfInsert;
 	private int[] MaxScore = {0,1,10,32,66,112,170,240,332,416,522,640,770,1066,1232};
 	
 	public Board(int num){
@@ -15,12 +16,14 @@ public class Board {
 		boardSize =num;
 		game = new String[boardSize][boardSize];
 		createBoard();
+		costOfInsert=0;
 	}
 	
 	public Board(Board board){
 		boardSize =board.getBoardSize();
 		game = board.getDeepCopyOfBoard();
 		freeSpace = board.getFreeSpace();
+		costOfInsert=0;
 	}
 	
 	public int getFreeSpace(){
@@ -51,6 +54,7 @@ public class Board {
 	public int insert(int row, Player x){
 		freeSpace--;
 		int score = 0;
+		int cost = 0;
 		String indicator = x.getIndicator();
 		boolean u=true,d = true,l =true,r = true; //can go
 		if(!indicator.equals("O") && !indicator.equals("X")){
@@ -85,39 +89,77 @@ public class Board {
 					if(d){
 						if(game[i+1][adji].equals(indicator))
 							score+=2;
+						else
+							cost +=4;
 					}
 					if(l){
+						cost--;
 						if(game[i][adji-1].equals(indicator))
 							score+=2;
+						if(game[i][adji-1].equals("."))
+							cost +=2;
+						else
+							cost +=4;
+						
 					}
 					if(r){
+						cost--;
 						if(game[i][adji+1].equals(indicator))
 							score+=2;
+						if(game[i][adji+1].equals("."))
+							cost +=2;
+						else
+							cost +=4;
+						
 					}
 					
 					if(d&&l){
 						if(game[i+1][adji-1].equals(indicator))
 							score+=1;
+						if(game[i+1][adji-1].equals("."))
+							cost +=1;
+						else
+							cost +=2;
+						
 					}
 					if(d&&r){
 						if(game[i+1][adji+1].equals(indicator))
 							score+=1;
+						if(game[i+1][adji+1].equals("."))
+							cost +=1;
+						else
+							cost +=2;
+						
 					}
 					if(u&&l){
 						if(game[i-1][adji-1].equals(indicator))
 							score+=1;
+						if(game[i-1][adji-1].equals("."))
+							cost +=1;
+						else
+							cost +=2;
+						
 					}
 					if(u&&r){
 						if(game[i-1][adji+1].equals(indicator))
 							score+=1;
+						if(game[i-1][adji+1].equals("."))
+							cost +=1;
+						else
+							cost +=2;
+						
 					}
-//					x.updateScore(score);
+					costOfInsert = cost/2;
 					return score;
 				}
 			}
 		}
 		System.out.println("Cannot Insert");
 		return -1;
+	}
+	
+	public int getCost(){
+		return costOfInsert;
 	}
 	
 	public String toString(){

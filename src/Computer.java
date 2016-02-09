@@ -3,13 +3,19 @@ import java.util.ArrayList;
 public class Computer extends Player{
 
 	private int plys;
-	private Player human;
-	public Computer(Board board, int plys, Player opponent) {
+	Board temp;
+	public Computer(Board board, int plys) {
 		super(board);
 		indicator = "O";
 		this.plys = plys;
-		human = opponent;
+		 temp = new Board(game);
+
 	}
+	
+	@Override
+	 public void setOpponent(Player x){
+		oppenent = x;
+	 }
 	
 	@Override
 	public Board Move(){
@@ -20,33 +26,49 @@ public class Computer extends Player{
 	
 	//returns array where [0] = score | [1] = desired position.
 	public int[] minimax(int level, Player player){
-		int bestScore= (player.getClass() == this.getClass()) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-	
+		int bestScore= (player == this) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 		int currentScore;
 		int rowToPick=0;
-		if(level==0){
-			bestScore= getScore() - human.getScore();
+		
+		if(level == plys){
+			temp = new Board(game);
+		}
+		ArrayList<Integer> numberOfMoves = temp.generateNextStates();
+	
+		if(level==0 || numberOfMoves.isEmpty()){
+			if(player == this){
+				bestScore = temp.getCost();
+			}
+			else{
+				bestScore= temp.getCost();
+
+			}
 		}
 		else{
-		ArrayList<Integer> x = game.generateNextStates();
-			for(int move: x){
-				if(player.getClass() == this.getClass()){
-					Board temp = new Board(game);
-					currentScore = minimax(level-1,human)[0]+ temp.insert(move, human);
-					if(currentScore > bestScore){
+
+			for(int move: numberOfMoves){
+				if(player == this){
+					currentScore = (int) (temp.insert(move, this)+ (1.5* temp.getCost()));
+					currentScore -= minimax(level-1,oppenent)[0];
+					if(currentScore >= bestScore){
 						bestScore = currentScore;
 						rowToPick = move;
 					}
 				}
+				
 				else{
-					Board temp = new Board(game);
-					currentScore = minimax(level-1, this)[0]- temp.insert(move, this);
-					if(currentScore < bestScore){
+					currentScore = (int) (-temp.insert(move, oppenent)- (1.5*temp.getCost()));
+					currentScore +=minimax(level-1, this)[0];
+					if(currentScore <= bestScore){
 						bestScore = currentScore;
 						rowToPick = move;
 					}
+					
 				}
+				temp = new Board(game);
+
 			}
+
 		}
 		return new int[]{bestScore,rowToPick};
 	}
