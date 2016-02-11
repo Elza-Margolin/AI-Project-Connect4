@@ -3,7 +3,6 @@ SUMMARY: a turn based two player game playing a connect-4 like game (the scoring
 One of the player is an AI agent using Minimax algorithm.
 RUN: GameAdmin. currently runs 9x9 board with 6 levels. 
 
-
 GAME DESCRIPTION:
 
 1. Turn base game. Player 1 (Human) is X and goes first. Player 2 "O" is AI and goes second. 
