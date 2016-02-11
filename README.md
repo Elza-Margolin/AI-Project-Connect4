@@ -1,6 +1,7 @@
 # AI-Project-Connect4
 SUMMARY: a turn based two player game playing a connect-4 like game (the scoring in this game is different). 
 One of the player is an AI agent using Minimax algorithm.
+
 RUN: GameAdmin. currently runs 9x9 board with 6 levels. 
 
 GAME DESCRIPTION:
